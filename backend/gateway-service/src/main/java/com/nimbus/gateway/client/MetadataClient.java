@@ -7,9 +7,12 @@ import org.springframework.web.client.RestClient;
 import java.util.Map;
 
 @Component
-@RequiredArgsConstructor
 public class MetadataClient {
     private final RestClient restClient;
+
+    public MetadataClient(RestClient metadataRestClient) {
+        this.restClient = metadataRestClient;
+    }
 
     public String createObject(
             String filename,
