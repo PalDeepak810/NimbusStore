@@ -16,14 +16,17 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class UploadController {
     private final UploadService uploadService;
+
     @PostMapping("/upload")
     public ResponseEntity<Map<String,String>> uploadFile(
             @RequestParam("file")MultipartFile file
             ){
-        uploadService.uploadFile(file);
+        String objectId = uploadService.uploadFile(file);
 
         return ResponseEntity.ok(
-                Map.of("message", "File received successfully")
+                Map.of("message", "File received successfully",
+                        "objectId",objectId
+                        )
         );
     }
 }
