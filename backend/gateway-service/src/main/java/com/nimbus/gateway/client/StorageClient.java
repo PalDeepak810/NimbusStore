@@ -56,4 +56,14 @@ public class StorageClient {
                 .retrieve()
                 .toBodilessEntity();
     }
+
+    public byte[] getChunk(String objectId, int chunkNumber) {
+
+        return restClient.get()
+                .uri("/objects/{objectId}/chunks/{chunkNumber}",
+                        objectId,
+                        chunkNumber)
+                .retrieve()
+                .body(byte[].class);
+    }
 }

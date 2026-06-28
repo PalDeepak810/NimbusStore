@@ -19,30 +19,6 @@ public class StorageController {
     private final StorageService storageService;
 
 
-    @PostMapping("/{objectId}")
-    public ResponseEntity<Map<String,String>> storeObject(
-            @PathVariable String objectId,
-            @RequestParam("file")MultipartFile file
-            )throws Exception{
-        storageService.store(objectId,file);
-
-        return ResponseEntity.ok(
-                Map.of("message","File stored successfully")
-        );
-    }
-
-    @GetMapping("/{objectId}")
-    public ResponseEntity<Resource> downloadObject(
-           @PathVariable String objectId
-    )throws Exception{
-        Resource resource = storageService.load(objectId);
-
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION,
-                        "attachment; filename=\""+resource.getFilename()+"\"")
-                .body(resource);
-    }
-
     @PostMapping("/{objectId}/chunks")
     public ResponseEntity<Map<String, String>> storeChunk(
             @PathVariable String objectId,
@@ -53,5 +29,15 @@ public class StorageController {
         return ResponseEntity.ok(
                 Map.of("message", "Chunk stored successfully")
         );
+    }
+
+    @GetMapping("/{objectId}/chunks/{chunkNumber}")
+    public ResponseEntity<byte[]> getChunk(
+            @PathVariable String objectId,
+            @PathVariable int chunkNumber) throws IOException {
+
+        byte[] chunk = storageService.loadChunk(objectId, chunkNumber);
+
+        return ResponseEntity.ok(chunk);
     }
 }

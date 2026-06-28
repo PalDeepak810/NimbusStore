@@ -1,5 +1,6 @@
 package com.nimbus.gateway.client;
 
+import com.nimbus.gateway.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClient;
@@ -33,5 +34,13 @@ public class MetadataClient {
                         .retrieve()
                         .body(Map.class);
         return response.get("objectId");
+    }
+
+    public ObjectMetadata getObject(String objectId) {
+
+        return restClient.get()
+                .uri("/objects/{objectId}", objectId)
+                .retrieve()
+                .body(ObjectMetadata.class);
     }
 }

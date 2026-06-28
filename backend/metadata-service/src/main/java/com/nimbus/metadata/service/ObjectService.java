@@ -33,4 +33,10 @@ public class ObjectService {
         objectMetadataRepository.save(object);
         return objectId;
     }
+
+    public ObjectMetadata getObject(UUID objectId) {
+
+        return objectMetadataRepository.findById(objectId)
+                .orElseThrow(() -> new RuntimeException("Object not found"));
+    }
 }

@@ -1,12 +1,10 @@
 package com.nimbus.metadata.controller;
 
+import com.nimbus.metadata.entity.ObjectMetadata;
 import com.nimbus.metadata.service.ObjectService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 import java.util.UUID;
@@ -34,5 +32,14 @@ public class ObjectController {
         return ResponseEntity.ok(
                 Map.of("objectId",objectId.toString())
         );
+    }
+
+    @GetMapping("/{objectId}")
+    public ResponseEntity<ObjectMetadata> getObject(
+            @PathVariable UUID objectId) {
+
+        ObjectMetadata object = objectService.getObject(objectId);
+
+        return ResponseEntity.ok(object);
     }
 }
