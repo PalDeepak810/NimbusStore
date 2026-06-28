@@ -57,4 +57,28 @@ public class StorageService {
         return Files.readAllBytes(chunkPath);
     }
 
+    public void deleteObject(String objectId) throws IOException {
+
+        Path objectDirectory = Paths.get(
+                StorageConstants.OBJECTS_DIRECTORY,
+                objectId
+        );
+
+        if (!Files.exists(objectDirectory)) {
+            throw new RuntimeException("Object not found");
+        }
+
+        Files.walk(objectDirectory)
+                .sorted((a, b) -> b.compareTo(a))
+                .forEach(path -> {
+                    try {
+                        Files.delete(path);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+
+        log.info("Deleted object {}", objectId);
+    }
+
 }

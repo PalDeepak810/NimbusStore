@@ -40,4 +40,15 @@ public class StorageController {
 
         return ResponseEntity.ok(chunk);
     }
+
+    @DeleteMapping("/{objectId}")
+    public ResponseEntity<Map<String, String>> deleteObject(
+            @PathVariable String objectId) throws IOException {
+
+        storageService.deleteObject(objectId);
+
+        return ResponseEntity.ok(
+                Map.of("message", "Object deleted successfully")
+        );
+    }
 }
