@@ -4,7 +4,6 @@ import com.nimbus.gateway.client.MetadataClient;
 import com.nimbus.gateway.client.StorageClient;
 import com.nimbus.gateway.model.ObjectMetadata;
 import lombok.RequiredArgsConstructor;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -12,7 +11,7 @@ import java.io.IOException;
 
 @Service
 @RequiredArgsConstructor
-public class DownloadService {
+public class DownloadOrchestrator {
     private final MetadataClient metadataClient;
     private final StorageClient storageClient;
 

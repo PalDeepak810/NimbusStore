@@ -1,6 +1,7 @@
 package com.nimbus.gateway.service;
 
 import com.nimbus.gateway.model.Chunk;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,23 +11,27 @@ import java.util.List;
 
 @Service
 public class ChunkService {
-    private static final int CHUNK_SIZE = 1024*1024; //1MB
 
-    public List<Chunk> splitIntoChunks(MultipartFile file)throws IOException{
+    @Value("${nimbus.chunk.size}")
+    private int chunkSize;
+
+    public List<Chunk> splitIntoChunks(MultipartFile file) throws IOException {
+
         byte[] fileBytes = file.getBytes();
 
         List<Chunk> chunks = new ArrayList<>();
 
-        int chunkNumber=0;
+        int totalChunks = (int) Math.ceil((double) fileBytes.length / chunkSize);
 
-        for(int i=0;i<fileBytes.length;i+=CHUNK_SIZE){
-            int j = Math.min(i+CHUNK_SIZE,fileBytes.length);
+        int chunkNumber = 0;
 
-            byte[] chunkData = new byte[j-i];
+        for (int start = 0; start < fileBytes.length; start += chunkSize) {
 
-            System.arraycopy(fileBytes,i,chunkData,0,j-i);
+            int end = Math.min(start + chunkSize, fileBytes.length);
 
-            int totalChunks = (int) Math.ceil((double) fileBytes.length / CHUNK_SIZE);
+            byte[] chunkData = new byte[end - start];
+
+            System.arraycopy(fileBytes, start, chunkData, 0, end - start);
 
             chunks.add(new Chunk(
                     chunkNumber++,
@@ -35,6 +40,7 @@ public class ChunkService {
                     chunkData
             ));
         }
+
         return chunks;
     }
 }

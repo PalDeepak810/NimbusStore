@@ -12,7 +12,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class UploadService {
+public class UploadOrchestrator {
     private final MetadataClient metadataClient;
     private final StorageClient storageClient;
     private final ChunkService chunkService;

@@ -1,6 +1,6 @@
 package com.nimbus.gateway.controller;
 
-import com.nimbus.gateway.service.UploadService;
+import com.nimbus.gateway.service.UploadOrchestrator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,13 +16,13 @@ import java.util.Map;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 public class UploadController {
-    private final UploadService uploadService;
+    private final UploadOrchestrator uploadOrchestrator;
 
     @PostMapping("/upload")
     public ResponseEntity<Map<String,String>> uploadFile(
             @RequestParam("file")MultipartFile file
             ) throws IOException {
-        String objectId = uploadService.uploadFile(file);
+        String objectId = uploadOrchestrator.uploadFile(file);
 
         return ResponseEntity.ok(
                 Map.of("message", "File received successfully",
