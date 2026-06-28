@@ -1,5 +1,6 @@
 package com.nimbus.gateway.client;
 
+import com.nimbus.gateway.model.Chunk;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.http.MediaType;
@@ -44,5 +45,15 @@ public class StorageClient {
                 .uri("/objects/{objectId}",objectId)
                 .retrieve()
                 .body(Resource.class);
+    }
+
+    public void storeChunk(String objectId, Chunk chunk) {
+
+        restClient.post()
+                .uri("/objects/{objectId}/chunks", objectId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .body(chunk)
+                .retrieve()
+                .toBodilessEntity();
     }
 }

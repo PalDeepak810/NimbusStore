@@ -1,6 +1,7 @@
 package com.nimbus.storage.service;
 
 
+import com.nimbus.storage.model.Chunk;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
@@ -51,4 +52,21 @@ public class StorageService {
 
         return new UrlResource(file.toUri());
     }
+
+    public void storeChunk(String objectId, Chunk chunk) throws IOException {
+
+        Path objectDirectory = Paths.get(STORAGE_DIR, objectId);
+
+        if (!Files.exists(objectDirectory)) {
+            Files.createDirectories(objectDirectory);
+        }
+
+        Path chunkPath = objectDirectory.resolve("chunk-" + chunk.getChunkNumber());
+
+        Files.write(chunkPath, chunk.getData());
+
+        System.out.println("Stored chunk : " + chunk.getChunkNumber());
+    }
+
+
 }
