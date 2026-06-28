@@ -19,15 +19,17 @@ public class UploadService {
 
     public String uploadFile(MultipartFile file) throws IOException {
 
+        //Split into chunks
+        List<Chunk> chunks = chunkService.splitIntoChunks(file);
+
         //Create metadata
         String objectId = metadataClient.createObject(
                 file.getOriginalFilename(),
                 file.getSize(),
-                file.getContentType()
+                file.getContentType(),
+                chunks.size()
         );
 
-        //Split into chunks
-        List<Chunk> chunks = chunkService.splitIntoChunks(file);
 
         //Upload each chunk
         for (Chunk chunk : chunks) {

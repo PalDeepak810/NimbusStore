@@ -17,7 +17,8 @@ public class MetadataClient {
     public String createObject(
             String filename,
             Long size,
-            String contentType
+            String contentType,
+            Integer chunkCount
     ){
         Map<String,String> response=
                 restClient.post()
@@ -26,6 +27,7 @@ public class MetadataClient {
                                 .queryParam("filename",filename)
                                 .queryParam("size",size)
                                 .queryParam("contentType",contentType)
+                                .queryParam("chunkCount",chunkCount)
                                 .build())
 
                         .retrieve()

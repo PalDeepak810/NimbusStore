@@ -16,7 +16,8 @@ public class ObjectService {
     public UUID createObject(
             String filename,
             Long size,
-            String contentType
+            String contentType,
+            Integer chunkCount
     ){
         ObjectMetadata object = new ObjectMetadata();
         UUID objectId = UUID.randomUUID();
@@ -27,6 +28,7 @@ public class ObjectService {
         object.setContentType(contentType);
         object.setStatus("Received");
         object.setCreatedAt(LocalDateTime.now());
+        object.setChunkCount(chunkCount);
 
         objectMetadataRepository.save(object);
         return objectId;

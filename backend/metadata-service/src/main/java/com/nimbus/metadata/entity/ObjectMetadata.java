@@ -28,4 +28,6 @@ public class ObjectMetadata {
     private String status;
 
     private LocalDateTime createdAt;
+
+    private Integer chunkCount;
 }

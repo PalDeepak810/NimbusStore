@@ -21,12 +21,14 @@ public class ObjectController {
     public ResponseEntity<Map<String,String>> createObject(
             @RequestParam String filename,
             @RequestParam Long size,
-            @RequestParam String contentType
+            @RequestParam String contentType,
+            @RequestParam Integer chunkCount
     ){
         UUID objectId = objectService.createObject(
                 filename,
                 size,
-                contentType
+                contentType,
+                chunkCount
         );
 
         return ResponseEntity.ok(
