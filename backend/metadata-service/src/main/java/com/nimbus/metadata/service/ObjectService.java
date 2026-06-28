@@ -1,6 +1,7 @@
 package com.nimbus.metadata.service;
 
 import com.nimbus.metadata.entity.ObjectMetadata;
+import com.nimbus.metadata.entity.ObjectStatus;
 import com.nimbus.metadata.repository.ObjectMetadataRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class ObjectService {
         object.setFilename(filename);
         object.setSize(size);
         object.setContentType(contentType);
-        object.setStatus("Received");
+        object.setStatus(ObjectStatus.RECEIVED);
         object.setCreatedAt(LocalDateTime.now());
         object.setChunkCount(chunkCount);
 

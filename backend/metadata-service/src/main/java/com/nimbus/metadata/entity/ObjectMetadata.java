@@ -25,7 +25,7 @@ public class ObjectMetadata {
 
     private String contentType;
 
-    private String status;
+    private ObjectStatus status;
 
     private LocalDateTime createdAt;
 
